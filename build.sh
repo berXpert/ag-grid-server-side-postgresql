@@ -1,0 +1,1 @@
+dotnet build ./Querybuilder/Querybuilder.csproj
