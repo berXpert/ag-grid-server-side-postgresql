@@ -1,4 +1,4 @@
-﻿namespace Querybuilder;
+﻿namespace QueryBuilder;
 public class PostgreSqlQueryBuilder
 {
 
