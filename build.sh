@@ -1,1 +1,1 @@
-dotnet build ./Querybuilder/Querybuilder.csproj
+dotnet build ./AgGridServerPostgres/AgGridServerPostgres.sln
