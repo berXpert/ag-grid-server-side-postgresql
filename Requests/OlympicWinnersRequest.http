@@ -1,0 +1,19 @@
+POST http://localhost:5049/OlympicWinners/winners
+Content-Type: application/json
+
+{
+    "StartRow" : 0,
+    "EndRow" : 0,
+    "RowGroupCols" :[
+       {
+        "Id" : "FieldId",
+        "DisplayName" : "The display",
+        "Field" : "Field",
+        "AggFunc" : "Sum"
+        } 
+    ],
+    "ValueCols" : [],
+    "PivotCols" : [],
+    "GroupKeys" : [],
+    "SortModel" : []
+}
