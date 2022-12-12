@@ -12,4 +12,20 @@ public record OlympicWinners(
     int Silver,
     int Bronze,
     int Total
-);
+)
+{
+    public OlympicWinners() :
+        this(
+            default,
+            default,
+            default,
+            default,
+            default,
+            default,
+            default,
+            default,
+            default,
+            default,
+            default)
+    {}
+}
