@@ -7,8 +7,17 @@ Similar to the [Oracle](<https://www.ag-grid.com/archive/25.0.0/documentation/an
 ## Ag grid request
 
 ``` json
-ServerSideGetRowsRequest
+GetRowsRequest
 {
-    ValuationIds[]
+    "StartRow" : 0,
+    "EndRow" : 0,
+    "RowGroupCols" :[
+       {
+        "Id" : "FieldId",
+        "DisplayName" : "The display",
+        "Field" : "Field",
+        "AggFunc" : "Sum"
+        } 
+    ]
 }
 ```
