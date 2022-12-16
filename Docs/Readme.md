@@ -16,14 +16,13 @@ dotnet user-secrets set "db_connection" "Server=yourServer;Port=5432;user id=use
 
 To run the API
 
-``` sh
+```sh
 dotnet run --project Api
 ```
 
 ## Ag grid request
 
-``` json
-GetRowsRequest
+```json
 {
     "StartRow" : 0,
     "EndRow" : 0,
