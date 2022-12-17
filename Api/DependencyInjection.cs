@@ -1,3 +1,4 @@
+using System.Data.Common;
 using Npgsql;
 using SqlKata.Compilers;
 using SqlKata.Execution;
@@ -7,14 +8,13 @@ namespace Api;
 public static class DependencyInjection
 {
     public static IServiceCollection AddPresentation(
-        this IServiceCollection services,
-        IConfiguration configuration)
+        this IServiceCollection services)
     {
         services.AddControllers();
-        services.AddSingleton<QueryFactory>( _ =>
+        services.AddScoped<QueryFactory>( providers =>
         {
-            var connString = configuration["db_connection"];
-            var connection = new NpgsqlConnection(connString);
+            var connection = providers.GetRequiredService<NpgsqlDataSource>()
+                                .OpenConnection();
             var compiler = new PostgresCompiler();
             return new QueryFactory(connection: connection, compiler: compiler);
         }
