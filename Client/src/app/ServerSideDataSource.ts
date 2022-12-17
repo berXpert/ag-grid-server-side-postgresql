@@ -22,9 +22,10 @@ export class ServerSideDatasource implements IServerSideDatasource {
                 // determine last tow size scrollbar and last block sie correctly
                 let lastRow = -1;
 
-                if(rows.length <= this.gridOptions.cacheBlockSize!)
+                if(rows.length <= (this.gridOptions.cacheBlockSize??100))
                 {
                     lastRow = params.request.startRow! + rows.length;
+                    console.log("Reached the end:" + lastRow);
                 }
 
                 params.success({
