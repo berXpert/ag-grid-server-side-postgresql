@@ -20,7 +20,7 @@ public class OlympicWinnersController : ControllerBase
     public ActionResult<IEnumerable<OlympicWinners>> GetRows(GetRowsRequest request)
     {
         var query = _db.Query("olympic_winners")
-                        .Limit(request.EndRow + request.StartRow+1)
+                        .Limit(request.EndRow - request.StartRow + 1)
                         .Offset(request.StartRow);
 
         if( request.GroupKeys.Count > 0)
