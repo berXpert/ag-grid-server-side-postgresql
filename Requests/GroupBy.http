@@ -1,0 +1,23 @@
+POST http://localhost:5049/OlympicWinners/winners
+Content-Type: application/json
+
+{    
+  "rowGroupCols": [
+  {
+   "id": "country",
+   "displayName": "Country",
+   "field": "country"
+  },
+  {
+   "id": "sport",
+   "displayName": "Sport",
+   "field": "sport"
+  }
+ ],
+ "valueCols": [],
+ "pivotCols": [],
+ "pivotMode": false,
+ "groupKeys": [],
+ "filterModel": {},
+ "sortModel": []
+}
