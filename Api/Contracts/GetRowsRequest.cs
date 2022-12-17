@@ -22,7 +22,7 @@ public class ColumnVO
     public string Id { get; set; }
     public string DisplayName { get; set; }
     public string Field { get; set; }
-    public string AggFunc { get; set; }
+    public string? AggFunc { get; set; }
 }
 
 public class SortModel
