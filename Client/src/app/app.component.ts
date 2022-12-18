@@ -19,12 +19,11 @@ export class AppComponent {
 
   public gridOptions: GridOptions;
   public rowData!: OlympicWinnerModel[];
-  public rowModelType: RowModelType = 'serverSide';
   serverSideDatasource: ServerSideDatasource;
 
   public columnDefs: ColDef[] = [
-    { field: 'country', rowGroup: true, hide: true },
-    { field: 'sport', rowGroup: true, hide: true },
+    { field: 'country', enableRowGroup: true, rowGroup: true },
+    { field: 'sport', enableRowGroup: true, rowGroup: true },
     { field: 'year', minWidth: 100 },
     { field: 'gold', aggFunc: 'sum' },
     { field: 'silver', aggFunc: 'sum' },
@@ -36,11 +35,12 @@ export class AppComponent {
     resizable: true,
     sortable: true,
   };
+  public rowGroupPanelShow: 'always' | 'onlyWhenGrouping' | 'never' = 'always';
   public autoGroupColumnDef: ColDef = {
     flex: 1,
     minWidth: 280,
-    field: 'athlete',
   };
+  public rowModelType: RowModelType = 'serverSide';
   public cacheBlockSize = 5;
 
   constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
