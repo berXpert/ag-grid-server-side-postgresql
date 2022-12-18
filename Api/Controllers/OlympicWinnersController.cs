@@ -62,6 +62,72 @@ public class OlympicWinnersController : ControllerBase
         {
             query.Where(request.RowGroupCols[i].Field, request.GroupKeys[i]);
         }
+
+        FilterSql(query, request.FilterModel);
+    }
+
+    private void FilterSql(Query query, Dictionary<string, ColumnFilter> filterModel)
+    {
+        filterModel.Where(f => f.Value.FilterType == "number").ToList()
+            .ForEach(filter => AddNumericFilter(filter.Key, query, filter.Value));
+
+        filterModel.Where(f => f.Value.FilterType == "text").ToList()
+            .ForEach(filter => AddTextFilter(filter.Key, query, filter.Value));
+
+        filterModel.Where(f => f.Value.FilterType == "set").ToList()
+            .ForEach(filter => AddSetFilter(filter.Key, query, filter.Value));
+
+        filterModel.Where(f => f.Value.FilterType == "boolean").ToList()
+            .ForEach(filter => AddBooleanFilter(filter.Key, query, filter.Value));
+    }
+
+    private void AddBooleanFilter(string field, Query query, ColumnFilter columnFilter)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void AddSetFilter(string field, Query query, ColumnFilter columnFilter)
+    {
+        query.WhereIn(field, columnFilter.Values);
+    }
+
+    private void AddTextFilter(string field, Query query, ColumnFilter columnFilter)
+    {
+        _ = columnFilter.Type switch
+        {
+            "contains" => query.WhereContains(field, columnFilter.Filter),
+            "notContains" => query.WhereNotContains(field, columnFilter.Filter),
+            "startsWith" => query.WhereStarts(field, columnFilter.Filter),
+            "endsWith" => query.WhereEnds(field, columnFilter.Filter),
+            _ => query.Where(field, GetOperatorForFilterType(columnFilter.Type), columnFilter.Filter)
+        };
+    }
+
+    private void AddNumericFilter(string field, Query query, ColumnFilter columnFilter)
+    {
+        if (columnFilter.Type == "inRange")
+        {
+            query.OrWhereBetween(field, int.Parse(columnFilter.Filter), int.Parse(columnFilter.FilterTo));
+        }
+        else
+        {
+            var op = GetOperatorForFilterType(columnFilter.Type);
+            query.OrWhere(field, op, int.Parse(columnFilter.Filter));
+        }
+    }
+
+    private string GetOperatorForFilterType(string filterType)
+    {
+        return filterType switch
+        {
+            "equals" => "=",
+            "notEqual" => "!=",
+            "lessThan" => "<",
+            "lessThanOrEqual" => "<=",
+            "greaterThan" => ">",
+            "greaterThanOrEqual" => ">=",
+            _ => "",
+        };
     }
 
     private void OrderBySql(Query query, GetRowsRequest request)
@@ -84,7 +150,7 @@ public class OlympicWinnersController : ControllerBase
 
         request.SortModel.ForEach(s =>
         {
-            if ( isGrouping && groupColIds.IndexOf(s.ColId) < 0 &&
+            if (isGrouping && groupColIds.IndexOf(s.ColId) < 0 &&
                  valueColIds.IndexOf(s.ColId) < 0
              )
             {

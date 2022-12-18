@@ -15,6 +15,8 @@ public class GetRowsRequest
     public List<string> GroupKeys { get; set; }
 
     public List<SortModel> SortModel { get; set; }
+
+    public Dictionary<string, ColumnFilter> FilterModel { get; set; }
 }
 
 public class ColumnVO
@@ -29,4 +31,13 @@ public class SortModel
 {
     public string ColId { get; set; }
     public string Sort { get; set; }
+}
+
+public class ColumnFilter
+{
+    public string Type { get; set; }
+    public string FilterType { get; set; }
+    public string Filter { get; set; }
+    public string? FilterTo { get; set; }
+    public List<string>? Values { get; set; }
 }

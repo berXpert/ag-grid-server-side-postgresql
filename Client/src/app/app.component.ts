@@ -22,12 +22,18 @@ export class AppComponent {
   serverSideDatasource: ServerSideDatasource;
 
   public columnDefs: ColDef[] = [
-    { field: 'country', enableRowGroup: true, rowGroup: true },
-    { field: 'sport', enableRowGroup: true, rowGroup: true },
-    { field: 'year', minWidth: 100 },
-    { field: 'gold', aggFunc: 'sum' },
-    { field: 'silver', aggFunc: 'sum' },
-    { field: 'bronze', aggFunc: 'sum' },
+    { field: 'athlete', minWidth: 220, filter: 'agTextColumnFilter' },
+    { field: 'country', minWidth: 200, filter: 'agTextColumnFilter' },
+    { field: 'year', filter: 'agNumberColumnFilter' },
+    {
+      field: 'sport',
+      enableRowGroup: true,
+      rowGroup: true,
+      filter: 'agTextColumnFilter',
+    },
+    { field: 'gold', aggFunc: 'sum', filter: 'agNumberColumnFilter' },
+    { field: 'silver', aggFunc: 'sum', filter: 'agNumberColumnFilter' },
+    { field: 'bronze', aggFunc: 'sum', filter: 'agNumberColumnFilter' },
   ];
   public defaultColDef: ColDef = {
     flex: 1,
