@@ -1,3 +1,6 @@
+using System.Text.Json.Serialization;
+using Api.Common;
+
 namespace Api.Contracts;
 
 public class GetRowsRequest
@@ -37,7 +40,11 @@ public class ColumnFilter
 {
     public string Type { get; set; }
     public string FilterType { get; set; }
+
+    [JsonConverter(typeof(AutoNumberToStringConverter))]
     public string Filter { get; set; }
+
+    [JsonConverter(typeof(AutoNumberToStringConverter))]
     public string? FilterTo { get; set; }
     public List<string>? Values { get; set; }
 }

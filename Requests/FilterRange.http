@@ -1,0 +1,51 @@
+POST http://localhost:5049/OlympicWinners/winners
+Content-Type: application/json
+
+{
+ "startRow": 0,
+ "endRow": 5,
+ "rowGroupCols": [
+  {
+   "id": "sport",
+   "displayName": "Sport",
+   "field": "sport"
+  }
+ ],
+ "valueCols": [
+  {
+   "id": "gold",
+   "aggFunc": "sum",
+   "displayName": "Gold",
+   "field": "gold"
+  },
+  {
+   "id": "silver",
+   "aggFunc": "sum",
+   "displayName": "Silver",
+   "field": "silver"
+  },
+  {
+   "id": "bronze",
+   "aggFunc": "sum",
+   "displayName": "Bronze",
+   "field": "bronze"
+  }
+ ],
+ "pivotCols": [],
+ "pivotMode": false,
+ "groupKeys": [],
+ "filterModel": {
+  "athlete": {
+   "filterType": "text",
+   "type": "contains",
+   "filter": "phelp"
+  },
+  "year": {
+   "filterType": "number",
+   "type": "inRange",
+   "filter": 2006,
+   "filterTo": 2009
+  }
+ },
+ "sortModel": []
+}
