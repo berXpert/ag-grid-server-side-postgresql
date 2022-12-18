@@ -1,11 +1,9 @@
 using Api;
-using Api.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services
-        .AddInfrastructure(builder.Configuration)
-        .AddPresentation();
+        .AddPresentation(builder.Configuration);
 }
 
 var app = builder.Build();
