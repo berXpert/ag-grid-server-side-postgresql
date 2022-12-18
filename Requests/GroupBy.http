@@ -1,8 +1,10 @@
 POST http://localhost:5049/OlympicWinners/winners
 Content-Type: application/json
 
-{    
-  "rowGroupCols": [
+{
+ "startRow": 5,
+ "endRow": 10,
+ "rowGroupCols": [
   {
    "id": "country",
    "displayName": "Country",
@@ -14,10 +16,40 @@ Content-Type: application/json
    "field": "sport"
   }
  ],
- "valueCols": [],
+ "valueCols": [
+  {
+   "id": "gold",
+   "aggFunc": "sum",
+   "displayName": "Gold",
+   "field": "gold"
+  },
+  {
+   "id": "silver",
+   "aggFunc": "sum",
+   "displayName": "Silver",
+   "field": "silver"
+  },
+  {
+   "id": "bronze",
+   "aggFunc": "sum",
+   "displayName": "Bronze",
+   "field": "bronze"
+  }
+ ],
  "pivotCols": [],
  "pivotMode": false,
- "groupKeys": [],
+ "groupKeys": [
+  "Argentina"
+ ],
  "filterModel": {},
- "sortModel": []
+ "sortModel": [
+  {
+   "colId": "country",
+   "sort": "asc"
+  },
+  {
+   "colId": "sport",
+   "sort": "asc"
+  }
+ ]
 }

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import {
+  ColDef,
   GridOptions,
   RowModelType,
 } from 'ag-grid-community';
@@ -21,21 +22,34 @@ export class AppComponent {
   public rowModelType: RowModelType = 'serverSide';
   serverSideDatasource: ServerSideDatasource;
 
+  public columnDefs: ColDef[] = [
+    { field: 'country', rowGroup: true, hide: true },
+    { field: 'sport', rowGroup: true, hide: true },
+    { field: 'year', minWidth: 100 },
+    { field: 'gold', aggFunc: 'sum' },
+    { field: 'silver', aggFunc: 'sum' },
+    { field: 'bronze', aggFunc: 'sum' },
+  ];
+  public defaultColDef: ColDef = {
+    flex: 1,
+    minWidth: 120,
+    resizable: true,
+    sortable: true,
+  };
+  public autoGroupColumnDef: ColDef = {
+    flex: 1,
+    minWidth: 280,
+    field: 'athlete',
+  };
+  public cacheBlockSize = 5;
+
   constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.gridOptions = {
       rowModelType: this.rowModelType,
-      columnDefs: [
-        { field: 'athlete', minWidth: 220 },
-        { field: 'country', minWidth: 200 },
-        { field: 'year' },
-        { field: 'sport', minWidth: 200 },
-        { field: 'gold' },
-        { field: 'silver' },
-        { field: 'bronze' },
-      ],
-      defaultColDef: {
-        sortable: true
-      }
+      columnDefs: this.columnDefs,
+      defaultColDef: this.defaultColDef,
+      autoGroupColumnDef: this.autoGroupColumnDef,
+      cacheBlockSize: this.cacheBlockSize
     } as GridOptions;
 
     this.serverSideDatasource = new ServerSideDatasource(this.gridOptions, this.http, baseUrl);
