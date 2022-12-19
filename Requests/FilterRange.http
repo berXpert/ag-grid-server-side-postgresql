@@ -2,7 +2,7 @@ POST http://localhost:5049/OlympicWinners/winners
 Content-Type: application/json
 
 {
- "startRow": 0,
+ "startRow": 1,
  "endRow": 5,
  "rowGroupCols": [
   {
@@ -33,18 +33,25 @@ Content-Type: application/json
  ],
  "pivotCols": [],
  "pivotMode": false,
- "groupKeys": [],
+ "groupKeys": [
+  "Swimming"
+ ],
  "filterModel": {
+  "sport": {
+   "filterType": "text",
+   "type": "contains",
+   "filter": "ing"
+  },
   "athlete": {
    "filterType": "text",
    "type": "contains",
-   "filter": "phelp"
+   "filter": "Phelp"
   },
   "year": {
    "filterType": "number",
    "type": "inRange",
-   "filter": 2006,
-   "filterTo": 2009
+   "filter": 2000,
+   "filterTo": 2005
   }
  },
  "sortModel": []
