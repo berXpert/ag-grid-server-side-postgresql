@@ -107,7 +107,7 @@ public class OlympicWinnersController : ControllerBase
     {
         if (columnFilter.Type == "inRange")
         {
-            query.WhereBetween(field, int.Parse(columnFilter.Filter), int.Parse(columnFilter.FilterTo));
+            query.WhereBetween(field, int.Parse(columnFilter.Filter), int.Parse(columnFilter.FilterTo ?? "0"));
         }
         else
         {

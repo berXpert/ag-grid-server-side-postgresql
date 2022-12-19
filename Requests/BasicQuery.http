@@ -9,5 +9,6 @@ Content-Type: application/json
     "ValueCols" : [],
     "PivotCols" : [],
     "GroupKeys" : [],
-    "SortModel" : []
+    "SortModel" : [],
+    "filterModel": {}
 }
