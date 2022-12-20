@@ -18,7 +18,7 @@ public class OlympicWinnersController : ControllerBase
     }
 
     [HttpPost("winners")]
-    public ActionResult<IEnumerable<OlympicWinners>> GetRows(GetRowsRequest request)
+    public ActionResult<IEnumerable<OlympicWinners>> GetRows(GridRowsRequest request)
     {
         var query = _db.Query("olympic_winners")
                         .Limit(request.EndRow - request.StartRow + 1)
@@ -33,7 +33,7 @@ public class OlympicWinnersController : ControllerBase
         return result.ToList();
     }
 
-    private void SelectSql(Query query, GetRowsRequest request)
+    private void SelectSql(Query query, GridRowsRequest request)
     {
         var rowGroupCols = request.RowGroupCols;
         var valueCols = request.ValueCols;
@@ -56,7 +56,7 @@ public class OlympicWinnersController : ControllerBase
         }
     }
 
-    private void WhereSql(Query query, GetRowsRequest request)
+    private void WhereSql(Query query, GridRowsRequest request)
     {
         for (int i = 0; i < request.GroupKeys.Count; i++)
         {
@@ -130,7 +130,7 @@ public class OlympicWinnersController : ControllerBase
         };
     }
 
-    private void OrderBySql(Query query, GetRowsRequest request)
+    private void OrderBySql(Query query, GridRowsRequest request)
     {
         if (request.SortModel.Count == 0)
         {
