@@ -18,8 +18,9 @@ public class OlympicWinnersController : ControllerBase
     }
 
     [HttpPost("winners")]
-    public ActionResult<IEnumerable<OlympicWinners>> GetRows(GridRowsRequest request)
+    public ActionResult<GridRowsResponse> GetRows(GridRowsRequest request)
     {
+        var result = new GridRowsResponse();
         var query = _db.Query("olympic_winners")
                         .Limit(request.EndRow - request.StartRow + 1)
                         .Offset(request.StartRow);
@@ -28,9 +29,25 @@ public class OlympicWinnersController : ControllerBase
         WhereSql(query, request);
         OrderBySql(query, request);
 
-        var result = query.Get<OlympicWinners>();
+        var fullJson = CreateJsonSql(query);
 
-        return result.ToList();
+        var jsonResult = fullJson.Get<string>().FirstOrDefault() ?? string.Empty;
+        result.Data = jsonResult.Length == 0 ? "[]" : jsonResult;
+
+        return result;
+    }
+
+    private Query CreateJsonSql(Query query)
+    {
+        var jsonQuery = _db.Query(string.Empty)
+            .From(query.As("the_data"))
+            .SelectRaw(@"row_to_json(""the_data"") AS data");
+
+        var fullJson = _db.Query(string.Empty)
+            .From(jsonQuery.As("x"))
+            .SelectRaw("json_agg(data) AS data");
+
+        return fullJson;
     }
 
     private void SelectSql(Query query, GridRowsRequest request)

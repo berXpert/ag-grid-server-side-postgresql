@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { GridOptions, IServerSideDatasource, IServerSideGetRowsParams } from "ag-grid-community";
 import { catchError, last, observable, throwError } from "rxjs";
 import { OlympicWinnerModel } from "src/model/OlympicWinnerModel";
+import { ServerSideResult } from "src/model/ServerSideResult";
 
 export class ServerSideDatasource implements IServerSideDatasource {
 
@@ -14,10 +15,10 @@ export class ServerSideDatasource implements IServerSideDatasource {
 
         console.log(this.baseUrl+ "OlympicWinners/winners");
 
-        this.http.post<OlympicWinnerModel[]>(this.baseUrl + "OlympicWinners/winners", params.request)
+        this.http.post<ServerSideResult<OlympicWinnerModel>>(this.baseUrl + "OlympicWinners/winners", params.request)
             .pipe(catchError(err => throwError(err)))
             .subscribe(response => {
-                const rows = response;
+                const rows = response.data || [];
 
                 // determine last tow size scrollbar and last block sie correctly
                 let lastRow = -1;
