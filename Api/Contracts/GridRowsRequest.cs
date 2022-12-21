@@ -3,7 +3,7 @@ using Api.Common;
 
 namespace Api.Contracts;
 
-public record class GetRowsRequest
+public record class GridRowsRequest
 {
     public int StartRow { get; set; }
     public int EndRow { get; set; }
