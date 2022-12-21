@@ -4,6 +4,7 @@ import {
   ColDef,
   GridOptions,
   RowModelType,
+  SideBarDef,
 } from 'ag-grid-community';
 import 'ag-grid-enterprise';
 import { OlympicWinnerModel } from 'src/model/OlympicWinnerModel';
@@ -23,11 +24,18 @@ export class AppComponent {
 
   public columnDefs: ColDef[] = [
     { field: 'athlete', minWidth: 220, filter: 'agTextColumnFilter' },
-    { field: 'country', minWidth: 200, filter: 'agTextColumnFilter' },
+    {
+      field: 'country', minWidth: 200, filter: 'agTextColumnFilter',
+      enableRowGroup: true,
+      enablePivot: true,
+      rowGroup: true,
+    },
     { field: 'year', filter: 'agNumberColumnFilter' },
     {
       field: 'sport',
       enableRowGroup: true,
+      enablePivot: true,
+      pivot: true,
       rowGroup: true,
       filter: 'agTextColumnFilter',
     },
@@ -42,6 +50,8 @@ export class AppComponent {
     sortable: true,
   };
   public rowGroupPanelShow: 'always' | 'onlyWhenGrouping' | 'never' = 'always';
+  public sideBar: SideBarDef | string | string[] | boolean | null = 'columns';
+
   public autoGroupColumnDef: ColDef = {
     flex: 1,
     minWidth: 280,
@@ -55,7 +65,9 @@ export class AppComponent {
       columnDefs: this.columnDefs,
       defaultColDef: this.defaultColDef,
       autoGroupColumnDef: this.autoGroupColumnDef,
-      cacheBlockSize: this.cacheBlockSize
+      cacheBlockSize: this.cacheBlockSize,
+      rowGroupPanelShow: 'always',
+      pivotPanelShow: 'always',
     } as GridOptions;
 
     this.serverSideDatasource = new ServerSideDatasource(this.gridOptions, this.http, baseUrl);
