@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Api.Common;
+namespace Contracts.Common;
 
 /// <summary>
 /// Serializes the contents of a string value as raw JSON.  The string is validated as being an RFC 8259-compliant JSON payload

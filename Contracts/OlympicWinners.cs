@@ -1,4 +1,4 @@
-namespace Api.Contracts;
+namespace Contracts;
 
 public record class OlympicWinners
 {
