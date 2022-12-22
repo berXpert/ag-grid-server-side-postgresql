@@ -23,9 +23,13 @@ public class OlympicWinnersController : ControllerBase
     public ActionResult<GridRowsResponse> GetRows(GridRowsRequest request)
     {
         var result = new GridRowsResponse();
-        var query = _db.Query(Table)
-                        .Limit(request.EndRow - request.StartRow + 1)
-                        .Offset(request.StartRow);
+        var query = _db.Query(Table);
+
+        if (!request.PivotMode)
+        {
+            query.Limit(request.EndRow - request.StartRow + 1)
+            .Offset(request.StartRow);
+        }
 
         SelectSql(query, request);
         WhereSql(query, request);
@@ -37,7 +41,13 @@ public class OlympicWinnersController : ControllerBase
         PivotGroupBy(pivotQuery, request);
         PivotSort(pivotQuery, request);
 
-        var fullJson = request.PivotMode? CreatePivotJsonSql(pivotQuery) : CreateJsonSql(query);
+        if (request.PivotMode)
+        {
+            pivotQuery.Limit(request.EndRow - request.StartRow + 1)
+            .Offset(request.StartRow);
+        }
+
+        var fullJson = request.PivotMode ? CreatePivotJsonSql(pivotQuery) : CreateJsonSql(query);
 
         var jsonResult = fullJson.Get<string>().FirstOrDefault() ?? string.Empty;
         result.Data = jsonResult.Length == 0 ? "[]" : jsonResult;
@@ -57,7 +67,7 @@ public class OlympicWinnersController : ControllerBase
                 .FromRaw(Table)
                 .SelectRaw($"Distinct on({listedPivotColumns}) {listedPivotColumns}");
 
-                // It is missing a where clause here, to include the Pivot values
+            // It is missing a where clause here, to include the Pivot values
 
             var secondaryColumnQuery = _db.Query(string.Empty)
                 .From(secondaryColumnInnerQuery.As("secondary_columns"))
