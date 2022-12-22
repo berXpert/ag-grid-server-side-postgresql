@@ -37,8 +37,7 @@ public class OlympicWinnersController : ControllerBase
         PivotGroupBy(pivotQuery, request);
         PivotSort(pivotQuery, request);
 
-
-        var fullJson = CreateJsonSql(pivotQuery);
+        var fullJson = request.PivotMode? CreatePivotJsonSql(pivotQuery) : CreateJsonSql(query);
 
         var jsonResult = fullJson.Get<string>().FirstOrDefault() ?? string.Empty;
         result.Data = jsonResult.Length == 0 ? "[]" : jsonResult;
@@ -177,6 +176,15 @@ public class OlympicWinnersController : ControllerBase
 
         var fullJson = _db.Query(string.Empty)
             .From(jsonQuery.As("x"))
+            .SelectRaw("json_agg(data) AS data");
+
+        return fullJson;
+    }
+
+    private Query CreatePivotJsonSql(Query query)
+    {
+        var fullJson = _db.Query(string.Empty)
+            .From(query.As("x"))
             .SelectRaw("json_agg(data) AS data");
 
         return fullJson;
