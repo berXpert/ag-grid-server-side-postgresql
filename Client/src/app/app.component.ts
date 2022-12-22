@@ -22,6 +22,7 @@ export class AppComponent {
   public rowData!: OlympicWinnerModel[];
   serverSideDatasource: ServerSideDatasource;
 
+  public pivotMode = true;
   public columnDefs: ColDef[] = [
     { field: 'athlete', minWidth: 220, filter: 'agTextColumnFilter' },
     {
