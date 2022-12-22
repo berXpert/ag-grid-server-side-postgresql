@@ -55,11 +55,11 @@ Content-Type: application/json
  "sortModel": [
   {
    "colId": "country",
-   "sort": "asc"
+   "sort": "desc"
   },
   {
    "colId": "sport",
-   "sort": "asc"
+   "sort": "desc"
   }
  ]
 }

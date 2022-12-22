@@ -25,16 +25,17 @@ public class OlympicWinnersController : ControllerBase
         var result = new GridRowsResponse();
         var query = _db.Query(Table);
 
-        if (!request.PivotMode)
-        {
-            query.Limit(request.EndRow - request.StartRow + 1)
-            .Offset(request.StartRow);
-        }
 
         SelectSql(query, request);
         WhereSql(query, request);
         GroupBySql(query, request);
-        OrderBySql(query, request);
+
+        if (!request.PivotMode)
+        {
+            query.Limit(request.EndRow - request.StartRow + 1)
+            .Offset(request.StartRow);
+            OrderBySql(query, request);
+        }
 
         var pivotQuery = PivotColumns(query, request);
         PivotOrderBy(pivotQuery, request);
@@ -45,6 +46,7 @@ public class OlympicWinnersController : ControllerBase
         {
             pivotQuery.Limit(request.EndRow - request.StartRow + 1)
             .Offset(request.StartRow);
+            OrderBySql(pivotQuery, request);
         }
 
         var fullJson = request.PivotMode ? CreatePivotJsonSql(pivotQuery) : CreateJsonSql(query);
