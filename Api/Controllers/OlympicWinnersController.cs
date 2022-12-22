@@ -162,7 +162,7 @@ public class OlympicWinnersController : ControllerBase
 
             include.ForEach(p =>
             {
-                query.SelectRaw($"coalesce(\"{p.Field}\", 'Unknown') AS \"{p.Field}\"");
+                query.SelectRaw($"coalesce(text(\"{p.Field}\"), 'Unknown') AS \"{p.Field}\"");
                 query.GroupBy(p.Field);
             });
         }

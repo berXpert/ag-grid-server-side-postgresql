@@ -24,25 +24,13 @@ export class AppComponent {
 
   public pivotMode = true;
   public columnDefs: ColDef[] = [
-    { field: 'athlete', minWidth: 220, filter: 'agTextColumnFilter' },
-    {
-      field: 'country', minWidth: 200, filter: 'agTextColumnFilter',
-      enableRowGroup: true,
-      enablePivot: true,
-      rowGroup: true,
-    },
-    { field: 'year', filter: 'agNumberColumnFilter' },
-    {
-      field: 'sport',
-      enableRowGroup: true,
-      enablePivot: true,
-      pivot: true,
-      rowGroup: true,
-      filter: 'agTextColumnFilter',
-    },
-    { field: 'gold', aggFunc: 'sum', filter: 'agNumberColumnFilter' },
-    { field: 'silver', aggFunc: 'sum', filter: 'agNumberColumnFilter' },
-    { field: 'bronze', aggFunc: 'sum', filter: 'agNumberColumnFilter' },
+    { field: 'country', rowGroup: true },
+    { field: 'sport', rowGroup: true },
+    { field: 'year', pivot: true },
+    { field: 'total', aggFunc: 'sum' },
+    { field: 'gold', aggFunc: 'sum' },
+    { field: 'silver', aggFunc: 'sum' },
+    { field: 'bronze', aggFunc: 'sum' },
   ];
   public defaultColDef: ColDef = {
     flex: 1,
