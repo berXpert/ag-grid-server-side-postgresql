@@ -1,0 +1,52 @@
+POST http://localhost:5049/OlympicWinners/winners
+Content-Type: application/json
+
+{
+ "startRow": 0,
+ "endRow": 5,
+ "rowGroupCols": [
+  {
+   "id": "country",
+   "displayName": "Country",
+   "field": "country"
+  },
+  {
+   "id": "sport",
+   "displayName": "Sport",
+   "field": "sport"
+  }
+ ],
+ "valueCols": [
+  {
+   "id": "gold",
+   "aggFunc": "sum",
+   "displayName": "Gold",
+   "field": "gold"
+  },
+  {
+   "id": "silver",
+   "aggFunc": "sum",
+   "displayName": "Silver",
+   "field": "silver"
+  },
+  {
+   "id": "bronze",
+   "aggFunc": "sum",
+   "displayName": "Bronze",
+   "field": "bronze"
+  }
+ ],
+ "pivotCols": [
+  {
+   "id": "sport",
+   "displayName": "Sport",
+   "field": "sport"
+  }
+ ],
+ "pivotMode": true,
+ "groupKeys": [
+  "Indonesia"
+ ],
+ "filterModel": {},
+ "sortModel": []
+}
