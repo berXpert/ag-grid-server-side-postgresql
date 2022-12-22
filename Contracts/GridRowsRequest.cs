@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
-using Api.Common;
+using Contracts.Common;
 
-namespace Api.Contracts;
+namespace Contracts;
 
 public record class GridRowsRequest
 {

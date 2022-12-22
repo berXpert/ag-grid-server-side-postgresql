@@ -3,7 +3,7 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Api.Common;
+namespace Contracts.Common;
 
 // This converter is needed to support the Filter & FilterTo.
 // As the field is defined as string, when numbers are sent

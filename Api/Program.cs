@@ -1,9 +1,11 @@
 using Api;
+using QueryBuilder;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services
-        .AddPresentation(builder.Configuration);
+        .AddPresentation()
+        .AddInfrastructure(builder.Configuration);
 }
 
 var app = builder.Build();
