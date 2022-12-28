@@ -20,7 +20,7 @@ public static class DependencyInjection
             var compiler = new PostgresCompiler();
             return new QueryFactory(connection: connection, compiler: compiler);
         });
-        services.AddScoped<IPostgreSqlQueryBuilder, PostgreSqlQueryBuilder>();
+        //services.AddScoped<IPostgreSqlQueryBuilder, PostgreSqlQueryBuilder>();
         return services;
     }
 }

@@ -5,21 +5,9 @@ using SqlKata.Execution;
 
 namespace QueryBuilder;
 
-public interface IPostgreSqlQueryBuilder
+public class PostgreSqlQueryBuilder
 {
-    GridRowsResponse Build(GridRowsRequest request, string table);
-}
-
-public class PostgreSqlQueryBuilder : IPostgreSqlQueryBuilder
-{
-    private readonly QueryFactory _db;
-    public PostgreSqlQueryBuilder(QueryFactory db)
-    {
-        _db = db;
-        _db.Logger = compiled => Console.WriteLine(compiled.ToString());
-    }
-
-    public GridRowsResponse Build(GridRowsRequest request, string table)
+    public GridRowsResponse Build(string table, QueryFactory _db, GridRowsRequest request)
     {
         var result = new GridRowsResponse();
         var query = _db.Query(table);
@@ -35,10 +23,10 @@ public class PostgreSqlQueryBuilder : IPostgreSqlQueryBuilder
             OrderBySql(query, request);
         }
 
-        var pivotQuery = PivotColumns(query, request);
+        var pivotQuery = PivotColumns(_db, query, request);
         PivotOrderBy(pivotQuery, request);
         PivotGroupBy(pivotQuery, request);
-        PivotSort(pivotQuery, request);
+        PivotSort(_db, pivotQuery, request);
 
         if (request.PivotMode)
         {
@@ -47,7 +35,7 @@ public class PostgreSqlQueryBuilder : IPostgreSqlQueryBuilder
             OrderBySql(pivotQuery, request);
         }
 
-        var fullJson = request.PivotMode ? CreatePivotJsonSql(pivotQuery) : CreateJsonSql(query);
+        var fullJson = request.PivotMode ? CreatePivotJsonSql(_db, pivotQuery) : CreateJsonSql(_db, query);
 
         var jsonResult = fullJson.Get<string>().FirstOrDefault() ?? string.Empty;
         result.Data = jsonResult.Length == 0 ? "[]" : jsonResult;
@@ -102,7 +90,7 @@ public class PostgreSqlQueryBuilder : IPostgreSqlQueryBuilder
         }
     }
 
-    private void PivotSort(Query query, GridRowsRequest request)
+    private void PivotSort(QueryFactory _db, Query query, GridRowsRequest request)
     {
         if (request.PivotMode)
         {
@@ -134,7 +122,7 @@ public class PostgreSqlQueryBuilder : IPostgreSqlQueryBuilder
         // If we are pivoting, we need to order by the pivot columns
     }
 
-    private Query PivotColumns(Query query, GridRowsRequest request)
+    private Query PivotColumns(QueryFactory _db, Query query, GridRowsRequest request)
     {
         if (request.PivotMode)
         {
@@ -177,7 +165,7 @@ public class PostgreSqlQueryBuilder : IPostgreSqlQueryBuilder
         }
     }
 
-    private Query CreateJsonSql(Query query)
+    private Query CreateJsonSql(QueryFactory _db, Query query)
     {
         var jsonQuery = _db.Query(string.Empty)
             .From(query.As("the_data"))
@@ -190,7 +178,7 @@ public class PostgreSqlQueryBuilder : IPostgreSqlQueryBuilder
         return fullJson;
     }
 
-    private Query CreatePivotJsonSql(Query query)
+    private Query CreatePivotJsonSql(QueryFactory _db, Query query)
     {
         var fullJson = _db.Query(string.Empty)
             .From(query.As("x"))
