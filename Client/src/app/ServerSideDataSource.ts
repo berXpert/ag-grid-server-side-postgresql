@@ -13,9 +13,9 @@ export class ServerSideDatasource implements IServerSideDatasource {
     getRows(params: IServerSideGetRowsParams<any>): void {
         console.log(JSON.stringify(params.request, null, 1));
 
-        console.log(this.baseUrl + "OlympicWinners/winners");
+        console.log(this.baseUrl + "api/winners");
 
-        this.http.post<ServerSideResult<OlympicWinnerModel>>(this.baseUrl + "OlympicWinners/winners", params.request)
+        this.http.post<ServerSideResult<OlympicWinnerModel>>(this.baseUrl + "api/winners", params.request)
             .pipe(catchError(err => throwError(err)))
             .subscribe(response => {
                 const rows = response.data || [];

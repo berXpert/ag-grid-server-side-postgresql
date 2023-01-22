@@ -112,7 +112,7 @@ If you need help using the Ag-Grid visit the official [documentation](<https://w
 You can call the API directly simulating the Ag-grid requests from the Client. Some samples are in the requests folder, for example the [BasicQuery.http](..\Requests\BasicQuery.http) request returns all the fields for the rows 5 and 6 on the dataset:
 
 ```json
-POST http://localhost:5049/OlympicWinners/winners
+POST http://localhost:5049/api/winners
 Content-Type: application/json
 
 {

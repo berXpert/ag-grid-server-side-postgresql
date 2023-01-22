@@ -1,7 +1,7 @@
 const PROXY_CONFIG = [
     {
         context: [
-            "/OlympicWinners"
+            "/api"
         ],
         target: "http://localhost:5049",
         secure: false,
