@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryBuilder", "QueryBuilde
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{53FDDCA1-F243-4C92-A8FC-56D8E5D8BBA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFunctionProj", "MyFunctionProj\MyFunctionProj.csproj", "{CC553E9B-8888-40C4-B429-8ACDFEEF2469}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFunctionProj", "api\MyFunctionProj.csproj", "{CC553E9B-8888-40C4-B429-8ACDFEEF2469}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
