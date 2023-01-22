@@ -3,5 +3,7 @@
         "Datasource",
         "Kata",
         "Npgsql"
-    ]
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/eba156a0-131d-447e-913b-21eb1c92cbaa/AppServices/subscriptions/eba156a0-131d-447e-913b-21eb1c92cbaa/resourceGroups/appsvc_windows_centralus/providers/Microsoft.Web/sites/agolympiads",
+    "appService.deploySubpath": "Publish"
 }
