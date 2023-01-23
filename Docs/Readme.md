@@ -8,6 +8,10 @@ The implementation follows the guide of the Server-Side Row Model [SSRM](<https:
 
 Similar to the samples provided by [Ag-grid](<https://www.ag-grid.com/angular-data-grid/server-side-model-infinite-scroll/>), this implementation provides infinite scroll, row grouping, filtering and pivoting for the data set Olympic winners.
 
+## Live demo
+
+This code is running as an Azure static app with an API based on Azure function [here](<https://agreeable-cliff-078d0f910.2.azurestaticapps.net>)
+
 ## Getting started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
