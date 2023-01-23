@@ -1,4 +1,4 @@
-POST http://localhost:5049/OlympicWinners/winners
+POST http://localhost:5049/api/winners
 Content-Type: application/json
 
 {

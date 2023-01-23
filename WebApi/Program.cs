@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
 {
-    app.MapPost("/OlympicWinners/winners",
+    app.MapPost("/api/winners",
         ([FromServices]IPostgreSqlQueryBuilder queryBuilder,
          GridRowsRequest request
          ) => queryBuilder.Build(request, "olympic_winners")
