@@ -48,8 +48,6 @@ dotnet user-secrets init
 dotnet user-secrets set "db_connection" "Server=yourServer;Port=5432;user id=userId;password=yourPassword" --project Api
 ```
 
-
-
 ### Installing, Testing, Building
 
 The build process is handled by dotnet and npm. Both applications will download any required libraries.
@@ -59,10 +57,10 @@ The build process is handled by dotnet and npm. Both applications will download 
 Run the following command on the root folder:
 
 ```sh
-dotnet run --project Api
+dotnet run --project WebApi
 ```
 
-The Api will be listening on the http://localhost:5049 address. The application logs should display something similar to:
+The Api will be listening on the <http://localhost:5049> address. The application logs should display something similar to:
 
 ``` sh
 
@@ -87,7 +85,7 @@ npm install
 npm start
 ```
 
-The Angular Web app will be hosted at http://localhost:4200/
+The Angular Web app will be hosted at <http://localhost:4200/>
 
 The npm command log should display something like:
 
@@ -131,6 +129,7 @@ Content-Type: application/json
     "filterModel": {}
 }
 ```
+
 Response:
 
 ```json
