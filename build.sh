@@ -1,2 +1,2 @@
 dotnet build AgGridPgsql.sln
-# dotnet test AgGridServerPostgres.sln
+dotnet test AgGridPgsql.sln

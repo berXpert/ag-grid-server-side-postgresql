@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Cont
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFunctionProj", "api\MyFunctionProj.csproj", "{CC553E9B-8888-40C4-B429-8ACDFEEF2469}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryBuilder.Test", "QueryBuilder.Test\QueryBuilder.Test.csproj", "{E035C044-BC7E-4CB2-8637-FBA19191F6CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{CC553E9B-8888-40C4-B429-8ACDFEEF2469}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC553E9B-8888-40C4-B429-8ACDFEEF2469}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC553E9B-8888-40C4-B429-8ACDFEEF2469}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E035C044-BC7E-4CB2-8637-FBA19191F6CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E035C044-BC7E-4CB2-8637-FBA19191F6CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E035C044-BC7E-4CB2-8637-FBA19191F6CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E035C044-BC7E-4CB2-8637-FBA19191F6CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

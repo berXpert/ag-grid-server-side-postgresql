@@ -12,42 +12,19 @@ public interface IPostgreSqlQueryBuilder
 
 public class PostgreSqlQueryBuilder : IPostgreSqlQueryBuilder
 {
-    private readonly QueryFactory _db;
-    public PostgreSqlQueryBuilder(QueryFactory db)
+    private readonly IQueryFactoryWrapper _db;
+    public PostgreSqlQueryBuilder(IQueryFactoryWrapper db)
     {
         _db = db;
-        _db.Logger = compiled => Console.WriteLine(compiled.ToString());
+        _db.SetLogger(compiled => Console.WriteLine(compiled.ToString()));
     }
 
     public GridRowsResponse Build(GridRowsRequest request, string table)
     {
         var result = new GridRowsResponse();
-        var query = _db.Query(table);
+        var query = BuildQuery(request, table);
 
-        SelectSql(query, request);
-        WhereSql(query, request);
-        GroupBySql(query, request);
-
-        if (!request.PivotMode)
-        {
-            query.Limit(request.EndRow - request.StartRow + 1)
-            .Offset(request.StartRow);
-            OrderBySql(query, request);
-        }
-
-        var pivotQuery = PivotColumns(query, request);
-        PivotOrderBy(pivotQuery, request);
-        PivotGroupBy(pivotQuery, request);
-        PivotSort(pivotQuery, request);
-
-        if (request.PivotMode)
-        {
-            pivotQuery.Limit(request.EndRow - request.StartRow + 1)
-            .Offset(request.StartRow);
-            OrderBySql(pivotQuery, request);
-        }
-
-        var fullJson = request.PivotMode ? CreatePivotJsonSql(pivotQuery) : CreateJsonSql(query);
+        var fullJson = request.PivotMode ? CreatePivotJsonSql(query) : CreateJsonSql(query);
 
         var jsonResult = fullJson.Get<string>().FirstOrDefault() ?? string.Empty;
         result.Data = jsonResult.Length == 0 ? "[]" : jsonResult;
@@ -86,6 +63,37 @@ public class PostgreSqlQueryBuilder : IPostgreSqlQueryBuilder
 
         return result;
     }
+
+    public Query BuildQuery(GridRowsRequest request, string table)
+    {
+        var query = _db.Query(table);
+
+        SelectSql(query, request);
+        WhereSql(query, request);
+        GroupBySql(query, request);
+
+        if (!request.PivotMode)
+        {
+            query.Limit(request.EndRow - request.StartRow + 1)
+            .Offset(request.StartRow);
+            OrderBySql(query, request);
+        }
+
+        var pivotQuery = PivotColumns(query, request);
+        PivotOrderBy(pivotQuery, request);
+        PivotGroupBy(pivotQuery, request);
+        PivotSort(pivotQuery, request);
+
+        if (request.PivotMode)
+        {
+            pivotQuery.Limit(request.EndRow - request.StartRow + 1)
+            .Offset(request.StartRow);
+            OrderBySql(pivotQuery, request);
+        }
+
+        return request.PivotMode ? pivotQuery : query;
+    }
+
     private void PivotColumnsOrderBy(Query query, List<ColumnVO> pivotCols)
     {
         if (pivotCols.Count > 0)
@@ -242,7 +250,7 @@ public class PostgreSqlQueryBuilder : IPostgreSqlQueryBuilder
         FilterSql(query, request.FilterModel);
     }
 
-    private void FilterSql(Query query, Dictionary<string, ColumnFilter> filterModel)
+    public void FilterSql(Query query, Dictionary<string, ColumnFilter> filterModel)
     {
         filterModel.Where(f => f.Value.FilterType == "number").ToList()
             .ForEach(filter => AddNumericFilter(filter.Key, query, filter.Value));
@@ -257,7 +265,7 @@ public class PostgreSqlQueryBuilder : IPostgreSqlQueryBuilder
             .ForEach(filter => AddBooleanFilter(filter.Key, query, filter.Value));
     }
 
-    private void AddBooleanFilter(string field, Query query, ColumnFilter columnFilter)
+    public static void AddBooleanFilter(string field, Query query, ColumnFilter columnFilter)
     {
         if (bool.TryParse(columnFilter.Filter, out var boolValue))
         {
@@ -265,13 +273,13 @@ public class PostgreSqlQueryBuilder : IPostgreSqlQueryBuilder
         }
     }
 
-    private void AddSetFilter(string field, Query query, ColumnFilter columnFilter)
+    public static void AddSetFilter(string field, Query query, ColumnFilter columnFilter)
     {
         var values = columnFilter?.Values?.Select(x => x).ToList();
         query.WhereIn(field, values);
     }
 
-    private void AddTextFilter(string field, Query query, ColumnFilter columnFilter)
+    public static void AddTextFilter(string field, Query query, ColumnFilter columnFilter)
     {
         _ = columnFilter.Type switch
         {
@@ -283,7 +291,7 @@ public class PostgreSqlQueryBuilder : IPostgreSqlQueryBuilder
         };
     }
 
-    private void AddNumericFilter(string field, Query query, ColumnFilter columnFilter)
+    public static void AddNumericFilter(string field, Query query, ColumnFilter columnFilter)
     {
         if (columnFilter.Type == "inRange")
         {
@@ -296,7 +304,7 @@ public class PostgreSqlQueryBuilder : IPostgreSqlQueryBuilder
         }
     }
 
-    private string GetOperatorForFilterType(string filterType)
+    public static string GetOperatorForFilterType(string filterType)
     {
         return filterType switch
         {
