@@ -13,7 +13,8 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         services.AddNpgsqlDataSource(configuration["db_connection"]!);
-        services.AddScoped<QueryFactory>(providers =>
+        services.AddScoped<IQueryFactoryWrapper, QueryFactoryWrapper>();
+        services.AddScoped(providers =>
         {
             var connection = providers.GetRequiredService<NpgsqlDataSource>()
                                 .OpenConnection();
