@@ -259,12 +259,16 @@ public class PostgreSqlQueryBuilder : IPostgreSqlQueryBuilder
 
     private void AddBooleanFilter(string field, Query query, ColumnFilter columnFilter)
     {
-        throw new NotImplementedException();
+        if (bool.TryParse(columnFilter.Filter, out var boolValue))
+        {
+            query.Where(field, boolValue);
+        }
     }
 
     private void AddSetFilter(string field, Query query, ColumnFilter columnFilter)
     {
-        query.WhereIn(field, columnFilter.Values);
+        var values = columnFilter?.Values?.Select(x => x).ToList();
+        query.WhereIn(field, values);
     }
 
     private void AddTextFilter(string field, Query query, ColumnFilter columnFilter)
