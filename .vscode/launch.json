@@ -6,7 +6,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Api/bin/Debug/net7.0/Api.dll",
+            "program": "${workspaceFolder}/Api/bin/Debug/net8.0/Api.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Api",
             "console": "internalConsole",

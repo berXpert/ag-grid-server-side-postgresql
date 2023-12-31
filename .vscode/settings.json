@@ -4,7 +4,7 @@
         "Kata",
         "Npgsql"
     ],
-    "azureFunctions.deploySubpath": "MyFunctionProj/bin/Release/net7.0/publish",
+    "azureFunctions.deploySubpath": "MyFunctionProj/bin/Release/net8.0/publish",
     "azureFunctions.projectLanguage": "C#",
     "azureFunctions.projectRuntime": "~4",
     "debug.internalConsoleOptions": "neverOpen",
