@@ -18,11 +18,11 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-You need to have a machine with dotnet > 7, node > 18 and npm > 8 installed.
+You need to have a machine with dotnet > 8, node > 18 and npm > 8 installed.
 
 ``` bash
 $ dotnet --version
-7.0.100
+8.0.100
 
 $ node --version  
 v18.12.1
